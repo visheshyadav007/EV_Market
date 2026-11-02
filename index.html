@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Global Electric Vehicle Market Analysis Dashboard">
+<title>EVision | Global EV Market Analysis</title>
+
+<style>
+:root {
+  --bg: #071411;
+  --panel: #10231d;
+  --panel2: #142b23;
+  --green: #9be65c;
+  --cyan: #55d6b0;
+  --text: #f1f7f2;
+  --muted: #a6b9ae;
+  --border: #ffffff18;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+a { text-decoration: none; color: inherit; }
+
+.container {
+  width: min(1160px, 90%);
+  margin: auto;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #071411f2;
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+  min-height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.logo span { color: var(--green); }
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.nav-links a:hover { color: var(--green); }
+
+.menu {
+  display: none;
+  padding: 8px 12px;
+  background: var(--panel);
+  color: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.hero {
+  min-height: 590px;
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(ellipse at 80% 25%, #9be65c20, transparent 38%),
+    radial-gradient(ellipse at 10% 80%, #55d6b018, transparent 35%);
+  padding: 90px 0;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(42px, 7vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  margin: 22px 0;
+  max-width: 850px;
+}
+
+h1 span { color: var(--green); }
+
+.hero p {
+  color: var(--muted);
+  font-size: 18px;
+  max-width: 690px;
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 13px 20px;
+  border-radius: 9px;
+  font-weight: 800;
+  font-size: 13px;
+  transition: .2s;
+}
+
+.btn:hover { transform: translateY(-3px); }
+
+.primary {
+  background: var(--green);
+  color: #102014;
+}
+
+.secondary {
+  border: 1px solid var(--border);
+  background: #ffffff08;
+}
+
+section { padding: 85px 0; }
+
+.dark {
+  background: #0b1c16;
+  border-block: 1px solid var(--border);
+}
+
+.section-heading {
+  max-width: 720px;
+  margin-bottom: 35px;
+}
+
+.section-heading h2 {
+  font-size: clamp(29px, 4vw, 43px);
+  line-height: 1.2;
+  margin: 12px 0;
+}
+
+.section-heading p {
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.card {
+  padding: 25px;
+  background: linear-gradient(145deg, var(--panel2), var(--panel));
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  transition: .25s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #9be65c70;
+}
+
+.icon {
+  font-size: 30px;
+  margin-bottom: 13px;
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 9px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.problem {
+  border-left: 3px solid var(--green);
+  padding: 12px 22px;
+  font-size: 18px;
+  color: #d5e4da;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.chart {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 19px;
+  min-height: 125px;
+}
+
+.chart small {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.chart h3 {
+  font-size: 15px;
+  margin: 9px 0;
+}
+
+.chart p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.dashboard-box {
+  padding: 30px;
+  background: linear-gradient(130deg, #9be65c12, #10231d);
+  border: 1px solid #9be65c55;
+  border-radius: 18px;
+}
+
+.dashboard-frame {
+  width: 100%;
+  height: 650px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #10231d;
+}
+
+.dashboard-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 12px;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tools span {
+  padding: 10px 15px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.resource-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  padding: 35px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+}
+
+.resource-box p { color: var(--muted); }
+
+footer {
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media(max-width: 850px) {
+  .grid, .chart-grid { grid-template-columns: repeat(2, 1fr); }
+  .resource-box { flex-direction: column; align-items: flex-start; }
+  .dashboard-frame { height: 520px; }
+}
+
+@media(max-width: 600px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: #0b1c16;
+    flex-direction: column;
+  }
+
+  .nav-links.open { display: flex; }
+  .menu { display: block; }
+  .grid, .chart-grid { grid-template-columns: 1fr; }
+  .hero { min-height: 500px; padding: 65px 0; }
+  section { padding: 60px 0; }
+  .dashboard-frame { height: 420px; }
+  .resource-box { padding: 23px; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="container navbar">
+    <a href="#home" class="logo">E<span>VISION</span></a>
+
+    <button class="menu" id="menu">☰</button>
+
+    <div class="nav-links" id="navLinks">
+      <a href="#overview">Overview</a>
+      <a href="#objectives">Objectives</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#resources">Resources</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="container">
+    <div class="eyebrow">Global EV Industry • Data Analytics • Sustainability</div>
+
+    <h1>
+      Driving the Future.<br>
+      <span>Analyzing Electric Mobility.</span>
+    </h1>
+
+    <p>
+      Explore the global electric vehicle market through data-driven
+      insights into vehicle sales, manufacturers, battery technologies,
+      driving range, customer satisfaction and sustainable mobility.
+    </p>
+
+    <div class="actions">
+      <a class="btn primary" href="#dashboard">Explore Dashboard ↗</a>
+      <a class="btn secondary"
+         href="https://github.com/visheshyadav007/EV_Market"
+         target="_blank" rel="noopener noreferrer">
+         View GitHub Repository
+      </a>
+    </div>
+  </div>
+</header>
+
+<section id="overview">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">01 / Project Overview</div>
+      <h2>Understanding the Electric Vehicle Revolution</h2>
+      <p>
+        The electric vehicle industry is transforming global transportation.
+        This project uses market data to explore manufacturers, vehicle
+        categories, battery technologies and customer preferences.
+      </p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="icon">⚡</div>
+        <h3>The Industry</h3>
+        <p>
+          Electric mobility is expanding through advancements in battery
+          technology, sustainability initiatives and changing consumer demand.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon">📊</div>
+        <h3>The Analysis</h3>
+        <p>
+          Explore sales performance, manufacturer comparisons, vehicle
+          specifications and customer ratings through data visualization.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🌱</div>
+        <h3>The Impact</h3>
+        <p>
+          Understand how electric mobility and battery innovations relate
+          to the transition toward more sustainable transportation.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">02 / Problem Statement</div>
+      <h2>What Drives the EV Market?</h2>
+    </div>
+
+    <div class="problem">
+      The growing electric vehicle industry generates large volumes of
+      market and operational data. Understanding sales performance,
+      manufacturer competition, battery technologies, vehicle range and
+      customer satisfaction requires a unified analytical approach.
+      This project aims to transform such data into meaningful insights
+      that support informed decisions.
+    </div>
+  </div>
+</section>
+
+<section id="objectives">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">03 / Project Objectives</div>
+      <h2>What We Aim to Discover</h2>
+      <p>Key analytical objectives of the project.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="icon">🚗</div>
+        <h3>Sales Performance</h3>
+        <p>Analyze EV sales across manufacturers, regions and vehicle categories.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🏭</div>
+        <h3>Manufacturer Analysis</h3>
+        <p>Compare manufacturer performance and competitive positioning.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🔋</div>
+        <h3>Battery Technology</h3>
+        <p>Explore the distribution of different battery technologies.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🛣️</div>
+        <h3>Driving Range</h3>
+        <p>Compare battery capacity and vehicle driving range.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">⭐</div>
+        <h3>Customer Satisfaction</h3>
+        <p>Study customer ratings across manufacturers and vehicle segments.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">🌍</div>
+        <h3>Sustainability</h3>
+        <p>Explore manufacturing distribution and estimated CO₂ savings.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="scenarios">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">04 / Stakeholder Scenarios</div>
+      <h2>Three Perspectives. One EV Market.</h2>
+      <p>The project addresses the analytical needs of three stakeholders.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="eyebrow">Scenario 01</div>
+        <h3>Emily Johnson</h3>
+        <p><strong>EV Market Strategy Director</strong></p>
+        <p>
+          Focuses on category sales, leading manufacturers, customer
+          satisfaction, battery adoption and market growth.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="eyebrow">Scenario 02</div>
+        <h3>David Chen</h3>
+        <p><strong>Automotive Business Intelligence Manager</strong></p>
+        <p>
+          Focuses on market share, manufacturer performance, battery
+          distribution and geographical manufacturing patterns.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="eyebrow">Scenario 03</div>
+        <h3>Dr. Sarah Williams</h3>
+        <p><strong>Sustainable Mobility Research Analyst</strong></p>
+        <p>
+          Focuses on battery innovation, driving range, manufacturing
+          distribution and sustainability-related indicators.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="analysis">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">05 / Analytical Views</div>
+      <h2>Nine Dimensions of EV Market Analysis</h2>
+      <p>
+        The project explores the following analytical perspectives
+        through data visualization.
+      </p>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart">
+        <small>01</small>
+        <h3>Annual EV Sales by Manufacturer</h3>
+        <p>Compare manufacturer sales performance.</p>
+      </div>
+
+      <div class="chart">
+        <small>02</small>
+        <h3>Sales by Vehicle Category</h3>
+        <p>Explore demand across vehicle segments.</p>
+      </div>
+
+      <div class="chart">
+        <small>03</small>
+        <h3>EV Sales by Model Year</h3>
+        <p>Explore recorded sales across model years.</p>
+      </div>
+
+      <div class="chart">
+        <small>04</small>
+        <h3>Battery Technology Distribution</h3>
+        <p>Compare different battery technologies.</p>
+      </div>
+
+      <div class="chart">
+        <small>05</small>
+        <h3>Battery Capacity vs Driving Range</h3>
+        <p>Explore the relationship between capacity and range.</p>
+      </div>
+
+      <div class="chart">
+        <small>06</small>
+        <h3>Customer Satisfaction</h3>
+        <p>Compare average ratings by vehicle category.</p>
+      </div>
+
+      <div class="chart">
+        <small>07</small>
+        <h3>Manufacturing Distribution</h3>
+        <p>Explore geographical manufacturing patterns.</p>
+      </div>
+
+      <div class="chart">
+        <small>08</small>
+        <h3>Price vs Customer Rating</h3>
+        <p>Compare vehicle pricing and customer ratings.</p>
+      </div>
+
+      <div class="chart">
+        <small>09</small>
+        <h3>CO₂ Savings by Category</h3>
+        <p>Explore estimated environmental savings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="dashboard">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">06 / Interactive Dashboard</div>
+      <h2>Explore the EV Market Dashboard</h2>
+      <p>
+        Explore the published Tableau dashboard for interactive
+        market analysis and visual insights.
+      </p>
+    </div>
+
+    <div class="dashboard-box">
+      <div class="actions" style="margin-top:0; margin-bottom:22px">
+        <a class="btn primary"
+           href="https://public.tableau.com/app/profile/vishesh.yadav5847/viz/EVMarketCapstoneProject_17936014108460/Dashboard1?publish=yes"
+           target="_blank" rel="noopener noreferrer">
+           Open Full Tableau Dashboard ↗
+        </a>
+      </div>
+
+      <div class="dashboard-frame">
+        <iframe
+          title="Global EV Market Analysis Tableau Dashboard"
+          src="https://public.tableau.com/views/EVMarketCapstoneProject_17936014108460/Dashboard1?:showVizHome=no&:embed=true"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <p style="color:var(--muted);font-size:12px;margin-top:14px">
+        If the dashboard does not load inside the page, use the
+        Open Full Tableau Dashboard button above.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="technology">
+  <div class="container">
+    <div class="section-heading">
+      <div class="eyebrow">07 / Technology Stack</div>
+      <h2>Tools Behind the Project</h2>
+      <p>Technologies used in the project workflow.</p>
+    </div>
+
+    <div class="tools">
+      <span>Tableau Public</span>
+      <span>CSV Dataset</span>
+      <span>Data Analysis</span>
+      <span>Data Visualization</span>
+      <span>Microsoft Excel</span>
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>GitHub</span>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="resources">
+  <div class="container">
+    <div class="resource-box">
+      <div>
+        <div class="eyebrow">08 / Project Resources</div>
+        <h2 style="margin:8px 0">Explore the Complete Project</h2>
+        <p>
+          Access the source repository and interactive Tableau dashboard.
+        </p>
+      </div>
+
+      <div class="actions">
+        <a class="btn primary"
+           href="https://public.tableau.com/app/profile/vishesh.yadav5847/viz/EVMarketCapstoneProject_17936014108460/Dashboard1?publish=yes"
+           target="_blank" rel="noopener noreferrer">
+           Tableau Dashboard ↗
+        </a>
+
+        <a class="btn secondary"
+           href="https://github.com/visheshyadav007/EV_Market"
+           target="_blank" rel="noopener noreferrer">
+           GitHub Repository ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© <span id="year"></span> Global EV Market Analysis</span>
+    <span>Electric Mobility • Data Analytics • Sustainability</span>
+  </div>
+</footer>
+
+<script>
+const menu = document.getElementById("menu");
+const navLinks = document.getElementById("navLinks");
+
+menu.addEventListener("click", () => {
+  navLinks.classList.toggle("open");
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+  });
+});
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+</script>
+
+</body>
+</html>
